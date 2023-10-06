@@ -1,0 +1,15 @@
+import serial
+
+ser = serial.Serial('COM6', 9600)  # replace 'COMx' with your port name
+counter = 0
+
+try:
+    while True:
+        if ser.inWaiting() > 0:
+            char = ser.read().decode('utf-8')  # Read a single character
+            print(char, end='', flush=True)  # Print the character without newline and flush the output
+            ser.write(b'5')  # Send acknowledgment
+
+except KeyboardInterrupt:
+    print("\nKeyboard interrupt detected. Closing the serial port...")
+    ser.close()
